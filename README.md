@@ -64,13 +64,16 @@ This project investigates the effectiveness of **Deep Learning** models for fore
 ## Results
 
 ### XGBoost Performance
+
+
 | Fold | RMSE   | \(R^2\)   | MAE    | sMAPE   |
 |------|--------|-----------|--------|---------|
-| 1    | X.XXXX | X.XXXX    | X.XXXX | XX.XX%  |
-| 2    | X.XXXX | X.XXXX    | X.XXXX | XX.XX%  |
-| 3    | X.XXXX | X.XXXX    | X.XXXX | XX.XX%  |
-| 4    | X.XXXX | X.XXXX    | X.XXXX | XX.XX%  |
-| 5    | X.XXXX | X.XXXX    | X.XXXX | XX.XX%  |
+| 1    | 0.2049 | -0.5475   | 0.1482 | 35.28%  |
+| 2    | 0.0155 | 0.9631    | 0.0099 |  2.44%  |
+| 3    | 0.0008 | 0.9994    | 0.0006 |  0.15%  |
+| 4    | 0.0153 | 0.9775    | 0.0067 |  1.03%  |
+| 5    | 0.0749 | 0.4300    | 0.0348 |  4.29%  |
+
 
 ### LSTM Performance
 | Fold | RMSE   | \(R^2\)   | MAE    | sMAPE   |
@@ -122,12 +125,22 @@ To reproduce the experiments, follow these steps:
 
 ### 2. Directory Structure 
 
-GOLD/
-├── data/                   # Dataset(s)
-├── figures/                # Output plots
-├── src/                    # Source code (Jupyter Notebook)
-├── requirements.txt        # Dependencies
-├── README.md               # Documentation
+
+```
+GOLD
+│   README.md              # Documentation
+│   requirements.txt       # Dependencies 
+│
+└───src
+│   │   forecasting.ipynb  # Source code (Jupyter Notebook)
+│   
+└───data                   # Dataset(s)
+    │   *csv
+|
+|____figures               # Output plots
+```
+
+
 
 
 ### 3. Notebook Execution
@@ -136,11 +149,9 @@ GOLD/
 ```bash
 jupyter notebook src/forecasting.ipynb
 
-    
 
 *Follow the instructions in the notebook to run each cell sequentially*
----
 
-*This project is part of my thesis work on investigating the effectiveness of  deep learning models in forecasting commodity price.*
+
 
 
