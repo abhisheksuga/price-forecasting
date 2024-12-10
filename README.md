@@ -1,8 +1,7 @@
-
-
 # Time Series Forecasting: Gold Price Prediction
 
 This project investigates the effectiveness of **Deep Learning** models for forecasting Commodity prices. The dataset contains historical gold price data and features like **Open**, **High**, **Low**, **Close**, and **Volume**. The experiments include feature engineering, model training, evaluation, and performance comparison.
+
 ---
 
 ## Dataset
@@ -63,8 +62,7 @@ This project investigates the effectiveness of **Deep Learning** models for fore
 
 ## Results
 
-### XGBoost Performance
-
+### XGBoost Performance (Original Dataset)
 
 | Fold | RMSE   | \(R^2\)   | MAE    | sMAPE   |
 |------|--------|-----------|--------|---------|
@@ -74,8 +72,8 @@ This project investigates the effectiveness of **Deep Learning** models for fore
 | 4    | 0.0153 | 0.9775    | 0.0067 |  1.03%  |
 | 5    | 0.0749 | 0.4300    | 0.0348 |  4.29%  |
 
+### LSTM Performance (Original Dataset)
 
-### LSTM Performance
 | Fold | RMSE   | \(R^2\)   | MAE    | sMAPE   |
 |------|--------|-----------|--------|---------|
 | 1    | 0.0094 | 0.9967    | 0.0070 | 1.48%   |
@@ -86,31 +84,78 @@ This project investigates the effectiveness of **Deep Learning** models for fore
 
 ---
 
+## Experimentation with Crude Oil Features
+
+To enrich the dataset, crude oil **Close Price** and **Volume** were added to the gold price dataset. These features aim to improve the predictive power by capturing economic interdependencies.
+
+- **New Dataset Size**: 80,145 records after merging crude oil features.
+
+### Results (With Crude Oil Features)
+
+#### XGBoost Performance
+
+| Fold | RMSE   | \(R^2\)   | MAE    | sMAPE   |
+|------|--------|-----------|--------|---------|
+| 1    | 0.1270 | -2.3528   | 0.1100 | 21.72%  |
+| 2    | 0.0028 | 0.9934    | 0.0020 |  0.54%  |
+| 3    | 0.0006 | 0.9994    | 0.0004 |  0.11%  |
+| 4    | 0.0126 | 0.9710    | 0.0063 |  0.95%  |
+| 5    | 0.0819 | 0.3417    | 0.0405 |  5.03%  |
+
+#### LSTM Performance
+
+| Fold | RMSE   | \(R^2\)   | MAE    | sMAPE   |
+|------|--------|-----------|--------|---------|
+| 1    | 0.0059 | 0.9928    | 0.0043 |  0.83%  |
+| 2    | 0.0071 | 0.9573    | 0.0066 |  1.73%  |
+| 3    | 0.0017 | 0.9940    | 0.0012 |  0.30%  |
+| 4    | 0.0063 | 0.9927    | 0.0056 |  0.95%  |
+| 5    | 0.0175 | 0.9699    | 0.0110 |  1.38%  |
+
+---
+
 ## Observations
 
-- **XGBoost**:
-  - Demonstrated strong performance with engineered features.
-  - Relies heavily on lagged values and rolling statistics for temporal context.
+1. **XGBoost**:
+   - While Fold 3 and Fold 2 show exceptional performance, Fold 1 struggled significantly, with negative \(R^2\) and high RMSE.
+   - This inconsistency suggests sensitivity to certain data segments or anomalies in Fold 1.
+   - Overall performance improved in some folds due to the inclusion of crude oil features.
 
-- **LSTM**:
-  - Performed exceptionally well with raw sequential data, learning patterns directly.
-  - Slightly underperformed in Fold 5, indicating possible variability in certain data segments.
+2. **LSTM**:
+   - Delivered **consistent performance** across all folds, with high \(R^2\) values (> 0.95).
+   - Exhibited lower error metrics (RMSE, MAE, sMAPE) compared to XGBoost.
+   - Robust in handling challenging data segments (e.g., Fold 1).
+
+---
+
+## Key Learnings
+
+1. **LSTM Outperforms XGBoost**:
+   - The sequential learning capability of LSTM allows it to capture complex relationships between gold prices and crude oil features.
+   - LSTM is more robust to outliers or anomalies in the data.
+
+2. **Crude Oil Features Add Value**:
+   - Including crude oil features improved the performance of both models, validating their relevance to gold price prediction.
+
+3. **Fold-Specific Challenges**:
+   - Investigating Fold 1’s data distribution could help understand why XGBoost struggled.
 
 ---
 
 ## Possible Next Steps
 
-1. **Hyperparameter Tuning**:
-   - Optimize LSTM architecture and parameters (e.g., units, dropout rate, learning rate).
-   - Tune XGBoost hyperparameters for comparison(if required).
+1. **Data Analysis**:
+   - Examine Fold 1 to identify anomalies or inconsistencies.
 
-2. **Model Benchmarking**:
-   - Experiment with other deep learning models like GRU, 1D CNN, or Transformer-based models.
+2. **Feature Engineering**:
+   - Add rolling averages or volatility metrics for crude oil prices.
+   - Consider additional economic indicators (e.g., S&P 500).
 
-3. **Test on Unseen Data**:
-   - Evaluate the best-performing model on a separate holdout dataset to assess robustness.
+3. **Model Tuning**:
+   - Optimize XGBoost and LSTM hyperparameters for better performance.
 
 ---
+
 
 
 ## Configuration Settings
